@@ -1,26 +1,18 @@
 package com.carboexco.modulo_usuario.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "usuario_rol")
-public class UsuarioRol implements Serializable {
+public class UsuarioRol {
+    @EmbeddedId
+    private UsuarioRolId id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    private Long id;
-
-    @Column(name = "id_usuario", nullable = false)
-    private Usuario idUsuario;
-
-    @Column(name = "id_rol", nullable = false)
-    private Rol idRol;
-
+    //TODO [JPA Buddy] generate columns from DB
 }

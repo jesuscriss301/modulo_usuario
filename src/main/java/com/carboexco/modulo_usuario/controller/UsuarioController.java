@@ -68,7 +68,7 @@ public class UsuarioController {
         if (currentUsuario.isPresent()) {
             Usuario updatedUsuario = currentUsuario.get();
             updatedUsuario.setNombre(usuario.getNombre());
-            updatedUsuario.setContraceña(usuario.getContraceña());
+            updatedUsuario.setContracenia(usuario.getContracenia());
             updatedUsuario.setCodigoRadio(usuario.getCodigoRadio());
             return usuarioRepository.save(updatedUsuario);
         }

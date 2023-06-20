@@ -29,12 +29,13 @@ public class UsuarioRolController {
     /**
      * Obtiene un registro de UsuarioRol por su ID.
      *
-     * @param idUsuarioRol ID del registro de UsuarioRol.
+     * @param idRol ID del registro de Rol.
+     * @param idUsuario ID del registro de Usuario.
      * @return El registro de UsuarioRol correspondiente al ID, o null si no se encuentra.
      */
-    @GetMapping("/{idUsuarioRol}")
-    public UsuarioRol getUsuarioRolById(@PathVariable Long idUsuarioRol) {
-        Optional<UsuarioRol> usuarioRol = usuarioRolRepository.findById(idUsuarioRol);
+    @GetMapping("/{idUsuario}/{idRol}")
+    public UsuarioRol getUsuarioRolById(@PathVariable Integer idUsuario,@PathVariable Integer idRol) {
+        Optional<UsuarioRol> usuarioRol = usuarioRolRepository.findFirstById_IdUsuarioAndId_IdRolOrderById_IdUsuarioAsc(idUsuario,idRol);
 
         if (usuarioRol.isPresent()) {
             return usuarioRol.get();
@@ -57,18 +58,18 @@ public class UsuarioRolController {
     /**
      * Actualiza un registro de UsuarioRol existente.
      *
-     * @param idUsuarioRol ID del registro de UsuarioRol a actualizar.
+     * @param idRol ID del registro de Rol.
+     * @param idUsuario ID del registro de Usuario.
      * @param usuarioRol   El objeto UsuarioRol con los nuevos datos.
      * @return El registro de UsuarioRol actualizado, o null si no se encuentra.
      */
     @PutMapping("/{idUsuarioRol}")
-    public UsuarioRol updateUsuarioRol(@PathVariable Long idUsuarioRol, @RequestBody UsuarioRol usuarioRol) {
-        Optional<UsuarioRol> currentUsuarioRol = usuarioRolRepository.findById(idUsuarioRol);
+    public UsuarioRol updateUsuarioRol(@PathVariable Integer idUsuario,@PathVariable Integer idRol, @RequestBody UsuarioRol usuarioRol) {
+        Optional<UsuarioRol> currentUsuarioRol =  usuarioRolRepository.findFirstById_IdUsuarioAndId_IdRolOrderById_IdUsuarioAsc(idUsuario,idRol);
 
         if (currentUsuarioRol.isPresent()) {
             UsuarioRol updatedUsuarioRol = currentUsuarioRol.get();
-            updatedUsuarioRol.setIdUsuario(usuarioRol.getIdUsuario());
-            updatedUsuarioRol.setIdRol(usuarioRol.getIdRol());
+            updatedUsuarioRol.setId(usuarioRol.getId());
             return usuarioRolRepository.save(updatedUsuarioRol);
         }
 
@@ -78,16 +79,17 @@ public class UsuarioRolController {
     /**
      * Elimina un registro de UsuarioRol por su ID.
      *
-     * @param idUsuarioRol ID del registro de UsuarioRol a eliminar.
+     * @param idUsuario ID del registro de Usuario a eliminar.
+     * @param idRol ID del registro de rol a eliminar.
      * @return El registro de UsuarioRol eliminado, o null si no se encuentra.
      */
     @DeleteMapping("/{idUsuarioRol}")
-    public UsuarioRol deleteUsuarioRol(@PathVariable Long idUsuarioRol) {
-        Optional<UsuarioRol> usuarioRol = usuarioRolRepository.findById(idUsuarioRol);
+    public UsuarioRol deleteUsuarioRol(@PathVariable Integer idUsuario,@PathVariable Integer idRol) {
+        Optional<UsuarioRol> usuarioRol = usuarioRolRepository.findFirstById_IdUsuarioAndId_IdRolOrderById_IdUsuarioAsc(idUsuario,idRol);
 
         if (usuarioRol.isPresent()) {
             UsuarioRol deletedUsuarioRol = usuarioRol.get();
-            usuarioRolRepository.deleteById(idUsuarioRol);
+            usuarioRolRepository.deleteById(deletedUsuarioRol.getId());
             return deletedUsuarioRol;
         }
 

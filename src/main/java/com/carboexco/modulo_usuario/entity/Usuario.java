@@ -17,8 +17,8 @@ public class Usuario {
     @Column(name = "nombre", nullable = false, length = 7)
     private String nombre;
 
-    @Column(name = "`contraceña`", nullable = false, length = 64)
-    private String contraceña;
+    @Column(name = "contracenia", nullable = false, length = 64)
+    private String contracenia;
 
     @Column(name = "codigo_radio", nullable = false, length = 9)
     private String codigoRadio;
