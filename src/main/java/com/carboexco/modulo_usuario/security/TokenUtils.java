@@ -13,10 +13,10 @@ import java.util.Map;
 
 public class TokenUtils {
 
-    private final static String ACCEESS_TOKEN_SECRET = "";
+    private final static String ACCEESS_TOKEN_SECRET = "uufvnlsdvjiojcmld";
     private final  static Long ACCESS_TOKEN_VALIDITY_SECONDS = 259200L;
 
-    public static String createToken(String nombre, String email){
+    public static String createToken(String nombre, String codigo_radio){
         long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS * 1000;
         Date expirationDate = new Date(System.currentTimeMillis()+ expirationTime);
 
@@ -24,7 +24,7 @@ public class TokenUtils {
         extra.put("nombre", nombre);
 
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(codigo_radio)
                 .setExpiration(expirationDate)
                 .addClaims(extra)
                 .signWith(Keys.hmacShaKeyFor(ACCEESS_TOKEN_SECRET.getBytes()))
@@ -41,8 +41,8 @@ public class TokenUtils {
                     .parseClaimsJws(token)
                     .getBody();
 
-            String email = claims.getSubject();
-            return new UsernamePasswordAuthenticationToken(email,null, Collections.emptyList());
+            String codigo_radio = claims.getSubject();
+            return new UsernamePasswordAuthenticationToken(codigo_radio,null, Collections.emptyList());
         }catch (JwtException e){
             return null;
         }
