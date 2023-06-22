@@ -1,4 +1,22 @@
 package com.carboexco.modulo_usuario.security;
 
-public class UserDetailServiceImpl {
+import com.carboexco.modulo_usuario.entity.Usuario;
+import com.carboexco.modulo_usuario.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+public class UserDetailServiceImpl implements UserDetailsService {
+
+    @Autowired
+    UsuarioRepository usuarios;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario usuario = usuarios.findByCodigoRadio(username)
+                .orElseThrow(()->new UsernameNotFoundException("el usuario de codigo " + username + " no existe."));
+
+        return new UserDetailImpl(usuario);
+    }
 }

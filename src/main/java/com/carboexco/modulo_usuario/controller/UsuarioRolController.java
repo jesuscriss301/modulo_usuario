@@ -35,6 +35,7 @@ public class UsuarioRolController {
      */
     @GetMapping("/{idUsuario}/{idRol}")
     public UsuarioRol getUsuarioRolById(@PathVariable Integer idUsuario,@PathVariable Integer idRol) {
+
         Optional<UsuarioRol> usuarioRol = usuarioRolRepository.findFirstById_IdUsuarioAndId_IdRolOrderById_IdUsuarioAsc(idUsuario,idRol);
 
         if (usuarioRol.isPresent()) {
