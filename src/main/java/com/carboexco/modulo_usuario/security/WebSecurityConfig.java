@@ -22,7 +22,7 @@ public class WebSecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager)throws Exception{
-
+        System.out.println("WebSecurityConfig:  filterChain________________________________");
         JWTAuthenticationFilter  jwtAuthenticationFilter = new JWTAuthenticationFilter();
         jwtAuthenticationFilter.setAuthenticationManager(authManager);
         jwtAuthenticationFilter.setFilterProcessesUrl("/login");
@@ -32,7 +32,6 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .anyRequest()
                 .authenticated()
-                .and().httpBasic()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -41,20 +40,9 @@ public class WebSecurityConfig {
                 .build();
     }
 
-    /*
-    @Bean
-    UserDetailsService userDetailsService(){
-
-        InMemoryUserDetailsManager manager =new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("admin")
-                .password(passwordEncoder().encode("admin"))
-                .roles().build());
-        return manager;
-    }*/
-
     @Bean
     AuthenticationManager authManager(HttpSecurity http)throws Exception{
-
+        System.out.println("WebSecurityConfig:  authManager _______________________________");
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder())
@@ -62,6 +50,8 @@ public class WebSecurityConfig {
     }
     @Bean
     PasswordEncoder passwordEncoder(){
+        System.out.println("WebSecurityConfig:      passwordEncoder______________________________");
+
         return new BCryptPasswordEncoder();
     }
 

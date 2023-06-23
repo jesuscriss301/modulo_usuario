@@ -13,16 +13,20 @@ import java.util.Map;
 
 public class TokenUtils {
 
-    private final static String ACCEESS_TOKEN_SECRET = "uufvnlsdvjiojcmld";
+    private final static String ACCEESS_TOKEN_SECRET = "aTgwuv8RZKiuGeqsIU2EFoTzu5YTTvZSCiln26ER9XE=";
     private final  static Long ACCESS_TOKEN_VALIDITY_SECONDS = 259200L;
 
     public static String createToken(String nombre, String codigo_radio){
+
+        System.out.println("TokenUtils:      createToken_____________________" +
+                "\n nombre:"+nombre+ "codigo radio:"+codigo_radio);
         long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS * 1000;
         Date expirationDate = new Date(System.currentTimeMillis()+ expirationTime);
 
         Map<String, Object> extra = new HashMap<>();
         extra.put("nombre", nombre);
 
+        System.out.println(extra);
         return Jwts.builder()
                 .setSubject(codigo_radio)
                 .setExpiration(expirationDate)
@@ -34,7 +38,8 @@ public class TokenUtils {
     public static UsernamePasswordAuthenticationToken getAuthentication(String token){
 
         try {
-
+            System.out.println("TokenUtils:      getAuthentication" +
+                    "\n token:"+token);
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(ACCEESS_TOKEN_SECRET.getBytes())
                     .build()
