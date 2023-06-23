@@ -17,14 +17,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("JWTAuthenticationFilter:    attemptAuthentication______________________________");
        AuthCredentials authCredentials =new AuthCredentials();
 
        try {
            authCredentials = new ObjectMapper().readValue(request.getReader(), AuthCredentials.class);
        }catch (IOException e){}
-
-        System.out.println(authCredentials.getCodigo_Radio()+"==>"+authCredentials.getPassword());
 
        UsernamePasswordAuthenticationToken usernamePAT = new UsernamePasswordAuthenticationToken(
                 authCredentials.getCodigo_Radio(),
@@ -39,7 +36,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
 
-        System.out.println("JWTAuthenticationFilter:    successfulAuthentication______________________________");
         UserDetailImpl userDetails = (UserDetailImpl) authResult.getPrincipal();
         String token = TokenUtils.createToken(userDetails.getNombre(), userDetails.getUsername());
 

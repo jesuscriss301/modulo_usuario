@@ -29,8 +29,6 @@ public class UserDetailImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-
-        System.out.println("UserDetailImpl:     getUsername => "+ usuario.getCodigoRadio());
         return usuario.getCodigoRadio();
     }
 
@@ -55,8 +53,6 @@ public class UserDetailImpl implements UserDetails {
     }
 
     public String getNombre(){
-
-        System.out.println("UserDetailImpl:     getNombre => "+ usuario.getNombre());
         return usuario.getNombre();
     }
 }

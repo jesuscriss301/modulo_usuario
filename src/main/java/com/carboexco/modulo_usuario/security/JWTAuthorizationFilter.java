@@ -20,10 +20,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        System.out.println("JWTAuthorizationFilter:     doFilterInternal______________________________");
         String bearerToken = request.getHeader("Authorization");
-
-        System.out.println("token:"+bearerToken);
 
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             String token = bearerToken.replace("Bearer ", "");

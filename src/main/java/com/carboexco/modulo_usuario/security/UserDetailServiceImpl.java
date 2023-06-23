@@ -17,12 +17,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        System.out.println("UserDetailServiceImpl:  loadUserByUsername________________________");
-        System.out.println(username);
         Usuario usuario = usuarios.findByCodigoRadio(username)
                 .orElseThrow(()->new UsernameNotFoundException("el usuario de codigo " + username + " no existe."));
-
-
 
         return new UserDetailImpl(usuario);
     }
