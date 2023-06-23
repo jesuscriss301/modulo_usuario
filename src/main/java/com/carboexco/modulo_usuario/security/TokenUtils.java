@@ -12,10 +12,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TokenUtils {
-
     private final static String ACCEESS_TOKEN_SECRET = "aTgwuv8RZKiuGeqsIU2EFoTzu5YTTvZSCiln26ER9XE=";
     private final  static Long ACCESS_TOKEN_VALIDITY_SECONDS = 259200L;
 
+    /**
+     * Crea un token JWT utilizando el nombre y el código de radio proporcionados.
+     *
+     * @param nombre      El nombre del usuario.
+     * @param codigo_radio El código de radio del usuario.
+     * @return El token JWT generado.
+     */
     public static String createToken(String nombre, String codigo_radio){
 
         long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS * 1000;
@@ -32,6 +38,12 @@ public class TokenUtils {
                 .compact();
     }
 
+    /**
+     * Obtiene la autenticación a partir de un token JWT.
+     *
+     * @param token El token JWT.
+     * @return El objeto UsernamePasswordAuthenticationToken si el token es válido, o null si el token es inválido.
+     */
     public static UsernamePasswordAuthenticationToken getAuthentication(String token){
 
         try {
@@ -43,7 +55,8 @@ public class TokenUtils {
 
             String codigo_radio = claims.getSubject();
             return new UsernamePasswordAuthenticationToken(codigo_radio,null, Collections.emptyList());
-        }catch (JwtException e){
+        } catch (JwtException e) {
+            // El token es inválido o ha expirado
             return null;
         }
     }

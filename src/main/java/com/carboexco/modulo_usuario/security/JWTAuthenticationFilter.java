@@ -15,31 +15,61 @@ import java.util.Collections;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    /**
+     * Intenta autenticar las credenciales enviadas en la solicitud.
+     *
+     * @param request  La solicitud HTTP.
+     * @param response La respuesta HTTP.
+     * @return El objeto Authentication que representa la autenticación exitosa.
+     * @throws AuthenticationException Si la autenticación falla.
+     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-       AuthCredentials authCredentials =new AuthCredentials();
+        AuthCredentials authCredentials = new AuthCredentials();
 
-       try {
-           authCredentials = new ObjectMapper().readValue(request.getReader(), AuthCredentials.class);
-       }catch (IOException e){}
+        try {
+            // Convierte el cuerpo de la solicitud JSON en un objeto AuthCredentials utilizando ObjectMapper.
+            authCredentials = new ObjectMapper().readValue(request.getReader(), AuthCredentials.class);
+        } catch (IOException e) {
+            // Manejo de errores de lectura del cuerpo de la solicitud.
+        }
 
-       UsernamePasswordAuthenticationToken usernamePAT = new UsernamePasswordAuthenticationToken(
+        // Crea un token de autenticación con las credenciales proporcionadas.
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 authCredentials.getCodigo_Radio(),
                 authCredentials.getPassword(),
                 Collections.emptyList());
-        return getAuthenticationManager().authenticate(usernamePAT);
+
+        // Autentica el token utilizando el AuthenticationManager y retorna el resultado.
+        return getAuthenticationManager().authenticate(authenticationToken);
     }
 
+    /**
+     * Se llama después de una autenticación exitosa para generar un token JWT y establecerlo en la respuesta.
+     *
+     * @param request    La solicitud HTTP.
+     * @param response   La respuesta HTTP.
+     * @param chain      El FilterChain.
+     * @param authResult El objeto Authentication que representa la autenticación exitosa.
+     * @throws IOException      Si ocurre un error al escribir la respuesta.
+     * @throws ServletException Si ocurre un error en el servlet.
+     */
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
 
+        // Obtiene los detalles del usuario autenticado.
         UserDetailImpl userDetails = (UserDetailImpl) authResult.getPrincipal();
+
+        // Crea un token JWT utilizando los detalles del usuario autenticado.
         String token = TokenUtils.createToken(userDetails.getNombre(), userDetails.getUsername());
 
+        // Agrega el token JWT en el encabezado de autorización de la respuesta.
         response.addHeader("Authorization", "Bearer " + token);
+
+        // Escribe la respuesta y continúa con la cadena de filtros.
         response.getWriter().flush();
         super.successfulAuthentication(request, response, chain, authResult);
     }

@@ -16,13 +16,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @AllArgsConstructor
 public class WebSecurityConfig {
-
     private final UserDetailsService userDetailsService;
     private final JWTAuthorizationFilter jwtAuthorizationFilter;
 
+    /**
+     * Configura la cadena de filtros de seguridad.
+     *
+     * @param http         La configuración de seguridad HTTP.
+     * @param authManager  El administrador de autenticación.
+     * @return La cadena de filtros de seguridad configurada.
+     * @throws Exception Si ocurre algún error durante la configuración.
+     */
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager)throws Exception{
-        JWTAuthenticationFilter  jwtAuthenticationFilter = new JWTAuthenticationFilter();
+    SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
+        JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter();
         jwtAuthenticationFilter.setAuthenticationManager(authManager);
         jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
@@ -39,16 +46,28 @@ public class WebSecurityConfig {
                 .build();
     }
 
+    /**
+     * Crea y configura el administrador de autenticación.
+     *
+     * @param http La configuración de seguridad HTTP.
+     * @return El administrador de autenticación configurado.
+     * @throws Exception Si ocurre algún error durante la configuración.
+     */
     @Bean
-    AuthenticationManager authManager(HttpSecurity http)throws Exception{
-
+    AuthenticationManager authManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder())
                 .and().build();
     }
+
+    /**
+     * Crea el codificador de contraseñas utilizado para codificar y validar contraseñas.
+     *
+     * @return El codificador de contraseñas.
+     */
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
