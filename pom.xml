@@ -111,12 +111,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<mainClass>com.carboexco.modulo_usuario.ModuloUsuarioApplication</mainClass>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
