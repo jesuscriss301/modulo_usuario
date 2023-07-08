@@ -68,7 +68,20 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // Agrega el token JWT en el encabezado de autorización de la respuesta.
         response.addHeader("Authorization", "Bearer " + token);
+        /*
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Origin", "http//192.168.1.135:*");
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.1.135:*","http://localhost:*"));
+        corsConfiguration.addAllowedMethod("GET, POST, PUT, DELETE");
+        corsConfiguration.addAllowedHeader("Content-Type, Content-Length, Host,");
+        corsConfiguration.setAllowCredentials(true);
 
+        response.setHeader("Access-Control-Allow-Origin", corsConfiguration.getAllowedOrigins().get(0));
+        response.setHeader("Access-Control-Allow-Methods", corsConfiguration.getAllowedMethods().toString());
+        response.setHeader("Access-Control-Allow-Headers", corsConfiguration.getAllowedHeaders().toString());
+        response.setHeader("Access-Control-Allow-Credentials", String.valueOf(corsConfiguration.getAllowCredentials()));
+        */
         // Escribe la respuesta y continúa con la cadena de filtros.
         response.getWriter().flush();
         super.successfulAuthentication(request, response, chain, authResult);
