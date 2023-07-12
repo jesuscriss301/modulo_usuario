@@ -10,18 +10,5 @@ public class ModuloUsuarioApplication {
 		SpringApplication.run(ModuloUsuarioApplication.class, args);
 	}
 
-	/*@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOrigins("'http://127.0.0.1:5500")
-						.allowedMethods("*")
-						.allowedHeaders("*")
-						.allowCredentials(true)
-						.maxAge(3600);
-			}
-		};
-	}*/
+
 }
