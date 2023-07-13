@@ -87,7 +87,7 @@ public class WebSecurityConfig {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers","Authorization"));
         corsConfiguration.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials","Authorization"));
-        corsConfiguration.setAllowedOriginPatterns(Arrays.asList("http://localhost:*", "http://192.168.1.135:*", "http://127.0.0.1:5500"));
+        corsConfiguration.setAllowedOriginPatterns(Arrays.asList("http://localhost:*", "http://192.168.1.209:*", "http://127.0.0.1:5500"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setMaxAge(Duration.ZERO);
